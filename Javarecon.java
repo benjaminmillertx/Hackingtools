@@ -1,3 +1,147 @@
+ more_vert Below is the pom.xml file that you can use for the provided JavaRecon.java file:
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.benjaminmillertx</groupId>
+    <artifactId>JavaRecon</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/com.github.dedis/ndn-java -->
+        <dependency>
+            <groupId>com.github.dedis</groupId>
+            <artifactId>ndn-java</artifactId>
+            <version>2.8</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.14.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.sublister/sublister -->
+        <dependency>
+            <groupId>net.sourceforge.sublister</groupId>
+            <artifactId>sublister</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.14.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.manosbatsis.asynchttpclient/async-http-client -->
+        <dependency>
+            <groupId>com.github.manosbatsis.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.manosbatsis.asynchttpclient/async-http-client -->
+        <dependency>
+            <groupId>com.github.manosbatsis.asynchttpclient</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>2.13.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.maxmind.geoip2/geoip2 -->
+Contact Photo more_vert Here is the continuation of the pom.xml file:
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.ultraq/quick-vm-client -->
+        <dependency>
+            <groupId>com.github.ultraq</groupId>
+            <artifactId>quick-vm-client</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.dariobaldi/subfinder -->
+        <dependency>
+            <groupId>com.github.dariobaldi</groupId>
+            <artifactId>subfinder</artifactId>
+            <version>0.1.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.projectdiscovery/httpx -->
+        <dependency>
+            <groupId>com.github.projectdiscovery</groupId>
+            <artifactId>httpx</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.projectdiscovery/naabu -->
+        <dependency>
+            <groupId>com.github.projectdiscovery</groupId>
+            <artifactId>naabu</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+Save this file in the same folder as the JavaRecon.java file. To compile and run the program, open the terminal in the project directory, execute the following command:
+mvn compile exec:java -Dexec.mainClass="JavaRecon" -Dexec.args="-d example.com -e sub1.com,sub2.com"
+Replace example.com and sub1.com,sub2.com with the desired values.
+With this pom.xml file, you should be able to build and run the JavaRecon.java program using Maven.
+
+
+
 //based off nahamsec lazyscript
 import java.io.*;
 import java.net.URI;
