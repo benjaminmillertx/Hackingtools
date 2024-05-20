@@ -329,5 +329,5 @@ pom.xml
     </dependencies>
 </project>
 This updated project structure and code should provide a good foundation for your OSINT Phone Reaper. You can add or remove OSINT tools based on your requirements. Additionally, you can further optimize the code for performance, error handling, and logging as needed.
-Please note that this code may not work as-is due to the limitations of the platform. Make sure to test and adapt it to your specific use case. Additionally, consider ethical considerations and privacy concerns when implementing and using such a tool.
+ Make sure to test and adapt it to your specific use case. Additionally, consider ethical considerations and privacy concerns when implementing and using such a tool.
 
