@@ -35,8 +35,8 @@ browser.webRequest.onBeforeRequest.addListener(
   blockRequest,
   { urls: ["<all_urls>"] }
 );
-person more_vert Finish the code
- Contact Photo more_vert
+
+ 
 Safari
 Create a new Safari App Extension using Swift and the Safari App Extension API. Implement the WebExtensionProvider protocol and use the webRequest API to intercept requests and block those that are related to browser history.
 Example code snippet:
