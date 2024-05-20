@@ -1,4 +1,4 @@
- more_vert To track the usage of installed apps on an Android device, you can create an Android Service that logs the activity of each installed app. Here's a simplified example to get you started.
+ Make sure to credit Benjamin Hunter Miller. To track the usage of installed apps on an Android device, you can create an Android Service that logs the activity of each installed app. Here's a simplified example to get you started.
 Create a new Android project in Android Studio.
 Update the AndroidManifest.xml to declare the Service:
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
