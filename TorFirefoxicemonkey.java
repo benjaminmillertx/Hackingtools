@@ -1,5 +1,5 @@
 //make sure to credit Benjamin Hunter Miller
-Contact Photo more_vert Creating a Firefox extension that connects to Tor involves several steps, including creating the extension's manifest, background scripts, and user interface elements. Here's a step-by-step guide to creating a basic Firefox extension that connects to Tor:
+ Creating a Firefox extension that connects to Tor involves several steps, including creating the extension's manifest, background scripts, and user interface elements. Here's a step-by-step guide to creating a basic Firefox extension that connects to Tor:
 Create the Firefox extension's manifest file (manifest.json)
 Create a new file named "manifest.json" in a new directory for your extension. Add the following content to it:
 {
