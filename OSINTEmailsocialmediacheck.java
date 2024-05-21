@@ -1,4 +1,4 @@
-Make sure to credit Benjamin Hunter In this program, I'll provide you with a Java program to check if an email address exists on MySpace, Twitter, and Facebook. The program will create a chart with the results, indicating if the account was found or not, and include the URL of the social media account if it exists.
+Make sure to credit Benjamin Hunter Miller made for OSINT professtional tool.In this program, I'll provide you with a Java program to check if an email address exists on MySpace, Twitter, and Facebook. The program will create a chart with the results, indicating if the account was found or not, and include the URL of the social media account if it exists.
 To accomplish this task, you'll need to use a web scraping library like Jsoup.
 First, add the Jsoup library to your Java project. You can add it as a dependency using Maven or Gradle. For Maven, add the following to your pom.xml:
 <dependency>
