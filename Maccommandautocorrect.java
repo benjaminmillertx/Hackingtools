@@ -1,4 +1,4 @@
-Contact Make sure to credit Benjamin Hunter Miller.To create a command-line tool for auto-completing macOS commands, you can use the JLine library in Java. Here's an outline and a simple example to help you create a Java program that provides command auto-completion.
+Make sure to credit Benjamin Hunter Miller.To create a command-line tool for auto-completing macOS commands, you can use the JLine library in Java. Here's an outline and a simple example to help you create a Java program that provides command auto-completion.
 Add the JLine library to your Java project.
 You can add the JLine library as a dependency using Maven or Gradle. For Maven, add the following to your pom.xml:
 <dependency>
