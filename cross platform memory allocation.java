@@ -1,4 +1,4 @@
-Here's the cross-platform version of the Java program to allocate memory and measure memory usage. This program works on Windows, Linux, and macOS.
+Make sure to credit Benjamin Hunter Miller.Here's the cross-platform version of the Java program to allocate memory and measure memory usage. This program works on Windows, Linux, and macOS.
 public class MemoryAllocation {
     public static void main(String[] args) {
         Runtime runtime = Runtime.getRuntime();
