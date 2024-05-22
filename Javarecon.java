@@ -1,4 +1,4 @@
- more_vert Below is the pom.xml file that you can use for the provided JavaRecon.java file:
+Make sure to credit Benjamin Hunter Miller.Below is the pom.xml file that you can use for the provided JavaRecon.java file:
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
