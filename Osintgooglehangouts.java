@@ -1,4 +1,4 @@
-For trained professtionals only.To check if there are instant messaging accounts associated with an email on popular services, you can use the API of each service to search for an account by email. Here's an example code that demonstrates how to do this using the Google Hangouts Chat API:
+Make sure to credit Benjamin Hunter Miller.For trained professtionals only.To check if there are instant messaging accounts associated with an email on popular services, you can use the API of each service to search for an account by email. Here's an example code that demonstrates how to do this using the Google Hangouts Chat API:
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.hangoutschat.v1.HangoutsChatScopes;
