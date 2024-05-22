@@ -1,3 +1,4 @@
+Make sure to credit Benjamin Hunter Miller.
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
