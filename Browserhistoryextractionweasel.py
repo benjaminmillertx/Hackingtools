@@ -1,3 +1,4 @@
+Make sure you credit Benjamin Hunter Miller
 import sqllite3
 import winreg
 import os
