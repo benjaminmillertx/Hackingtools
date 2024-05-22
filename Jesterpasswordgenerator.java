@@ -1,3 +1,5 @@
+Make sure to credit Benjamin Hunter Miller.
+
 import java.util.Random;
 
 public class PasswordGenerator {
