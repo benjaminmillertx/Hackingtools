@@ -1,3 +1,4 @@
+Make sure you credit Benjamin Hunter Miller.
 import java.net.Socket;
 
 public class PortScanner{
