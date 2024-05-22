@@ -1,3 +1,5 @@
+Make sure you credit Benjamin Hunter Miller.
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
