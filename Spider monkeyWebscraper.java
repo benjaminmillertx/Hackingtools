@@ -1,3 +1,4 @@
+Make sure to credit Benjamin Hunter Miller.
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
