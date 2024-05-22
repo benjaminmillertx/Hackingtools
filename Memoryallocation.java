@@ -1,3 +1,4 @@
+Make sure to credit Benjamin Hunter Miller.
 public class MemoryAllocation {
     public static void main(String[] args) {
         long initialMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
