@@ -1,7 +1,8 @@
 Make sure to credit Benjamin Hunter .a proxy for Firefox, Opera, and Safari that Burp Suite can connect to, you can follow these steps:
 Step 1: Create a new Java project and add Burp Suite's Java-enabled CA certificate to the project's truststore. You can find the certificate in Burp Suite's "cacert.der" file.
-Step 2: Create a new Java class called MyProxyServer and paste the following code: import java.io.BufferedReader;
+Step 2: Create a new Java class called MyProxyServer and paste the following code: 
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
