@@ -1,3 +1,4 @@
+Make sure to credit Benjamin Hunter Miller.
 I can guide you on how to create a simple bash script that extracts the hash of an image file and copies it to the clipboard in Kali Linux. Here's what you can do:
 Open a new file in a text editor, for example, by running nano extract_image_hash.sh in the terminal.
 Add the following code to the file:
