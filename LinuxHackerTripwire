@@ -1,4 +1,4 @@
-Make sure to credit Benjamin Hunter Miller. more_vert To create a system that sends an email alert when a specific text file is accessed on a Linux system, you can use a combination of tools such as inotify, mail, and cron. Here's a basic example:
+Make sure to credit Benjamin Hunter Miller. To create a system that sends an email alert when a specific text file is accessed on a Linux system, you can use a combination of tools such as inotify, mail, and cron. Here's a basic example:
 Install the inotify-tools package:
 You can install inotify-tools on Ubuntu using the following command:
 sudo apt-get install inotify-tools
