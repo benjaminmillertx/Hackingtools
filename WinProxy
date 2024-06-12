@@ -1,0 +1,69 @@
+Make sure to credit Benjamin Hunter Miller.Here are the steps to create a proxy chain using `putty` and `tor` on Windows:
+
+1. Install `tor`:
+
+You can download the latest version of `tor` for Windows from the official website (<https://www.torproject.org/download/download-easy.html>). After downloading, extract the archive and move the `tor` executable to a directory in your system `PATH`.
+
+2. Start `tor`:
+
+Open the `Command Prompt` application and run the following command to start `tor`:
+
+```cmd
+tor.exe
+```
+
+3. Check the `tor` status:
+
+To check if `tor` is running and listening on the default port (`9050`), you can run:
+
+```cmd
+netstat -an | findstr 9050
+```
+
+If `tor` is running, you should see a line like this:
+
+```bash
+TCP    127.0.0.1:9050         0.0.0.0:0              LISTENING
+```
+
+4. Set up the `tor` proxy in `putty`:
+
+To set up the `tor` proxy in `putty`, follow these steps:
+
+a. Open `putty` and enter the hostname or IP address of the destination host.
+
+b. Under `Connection` > `SSH` > `Tunnels`, enter the source port number (e.g., `8080`) and the destination (e.g., `localhost:80`).
+
+c. Select the `Dynamic` and `Auto` options.
+
+d. Click the `Add` button.
+
+e. Under `Connection` > `SSH` > `Data`, enter the `Auto` username and password for the destination host.
+
+f. Under `Connection` > `SSH` > `Auth`, browse for the `private key` file for the destination host (if applicable).
+
+g. Under `Session`, enter a name for the session and click the `Save` button (if applicable).
+
+h. In the `Category` list, expand `Connection` > `SSH` > `Tunnels`.
+
+i. In the `Dynamic` field, enter the source port number (e.g., `8080`).
+
+j. In the `Destination` field, enter `localhost:9050`.
+
+k. Click the `Add` button.
+
+l. In the `Category` list, click the `Open` button to open the SSH connection.
+
+5. Test the `tor` proxy chain:
+
+To test the `tor` proxy chain, you can use the `putty` command with the `-ssh` option and specify the destination hostname or IP address:
+
+```cmd
+putty -ssh user@destination-host -P 8080
+```
+
+Replace `user` with your username on the destination host, and `destination-host` with the hostname or IP address of the final destination host.
+
+This command sends the SSH request through the `tor` proxy to the specified destination. The `-P` option specifies the source port number (`8080`), which was set up in step 4.
+
+Note that this example uses `putty` as the SSH client and final proxy server, but you can also use other SSH clients and proxy servers. The actual configuration will depend on your specific network and security requirements. It's always a good idea to consult the official documentation for `tor` and `putty` and seek advice from experienced system administrators or security professionals.
