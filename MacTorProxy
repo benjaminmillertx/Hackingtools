@@ -1,0 +1,22 @@
+here are the steps to create a proxy chain using tor on a Mac:
+Install tor:
+You can download the latest version of tor for macOS from the official website (<https://www.torproject.org/download/download-easy.html>). After downloading, extract the archive and move the Tor application to the /Applications directory.
+Start tor:
+Open the Terminal application and run the following command to start tor:
+/Applications/Tor/Tor.app/Contents/MacOS/Tor
+Check the tor status:
+To check if tor is running and listening on the default port (9050), you can run:
+lsof -i :9050
+If tor is running, you should see a line like this:
+Tor      12345 username   23u  IPv4 0x1234567890   0t0  TCP 127.0.0.1:9050 (LISTEN)
+Set up the tor proxy:
+To set up the tor proxy, you can use the curl command with the --socks5 option and specify the localhost address and port (9050):
+curl --socks5 localhost:9050 https://www.example.com
+This command sends the HTTP request through the tor proxy to the specified destination.
+Test the tor proxy chain:
+To test the tor proxy chain, you can use the curl command with the --socks5 option and specify the localhost address and port (9050), and then specify the destination hostname or IP address:
+ssh -o ProxyCommand="curl --socks5 localhost:9050 -sSf -m 30 -o /dev/null -w '%{http_code}' http://localhost:8080/%h:%p/" user@destination-host
+Replace user with your username on the destination host, and destination-host with the hostname or IP address of the final destination host.
+This command sends the SSH request through the tor proxy to the specified destination. The ProxyCommand option specifies the curl command with the --socks5 option and the localhost address and port (9050), and then specifies the destination hostname or IP address and port (8080). The -m option specifies the maximum time to wait for the connection (30 seconds). The -o option specifies the output file (/dev/null), and the -w option specifies the output format (%{http_code}), which prints the HTTP response code.
+Note that this example uses ssh as the final proxy server, but you can also use other proxy servers such as a SOCKS proxy server. The actual configuration will depend on your specific network and security requirements. It's always a good idea to consult the official documentation for tor and seek advice from experienced system administrators or security professionals.
+
