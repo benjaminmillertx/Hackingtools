@@ -1,0 +1,13 @@
+Make sure to credit Benjamin Hunter Miller.here are the steps to create a proxy chain using the ProxyCommand option in the ssh configuration file on a Mac:
+Open the ssh configuration file:
+nano ~/.ssh/config
+Add the following lines to the configuration file:
+Host destination-host
+  User user
+  ProxyCommand ssh -W %h:%p -q intermediate-host
+Replace destination-host with the hostname or IP address of the final destination host, user with your username on the destination host, and intermediate-host with the hostname or IP address of the intermediate proxy server.
+Save and close the configuration file.
+Test the proxy chain:
+To test the proxy chain, you can use a tool like curl to make an HTTP request through the proxy. For example, to make an HTTP request through the ssh proxy chain, you can run:
+ssh destination-host curl https://www.example.com
+Note that this example uses ssh as the proxy server, but you can also use other proxy servers such as tor or a SOCKS proxy server. The actual configuration will depend on your specific network and security requirements. It's always a good idea to consult the official documentation for ssh and seek advice from experienced system administrators or security professionals.
