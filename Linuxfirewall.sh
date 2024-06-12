@@ -1,4 +1,4 @@
-Contact Photo more_vert To create a firewall on Linux, you can use the iptables command, which is a user-space utility program that allows a system administrator to configure the IP packet filter rules of the Linux kernel firewall, implemented as different Netfilter modules.
+Make sure to credit Benjamin Hunter Miller.To create a firewall on Linux, you can use the iptables command, which is a user-space utility program that allows a system administrator to configure the IP packet filter rules of the Linux kernel firewall, implemented as different Netfilter modules.
 Here's an example of how to create a simple firewall using iptables:
 Open a terminal session and run the following command to allow incoming traffic on port 80 (HTTP):
 sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
