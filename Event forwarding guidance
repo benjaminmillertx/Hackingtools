@@ -1,0 +1,89 @@
+To implement the collection of security-relevant Windows Event Log events using Windows Event Forwarding (WEF), follow these steps:
+
+1. Set Up the WEF Infrastructure
+
+a. Identify the Collectors and Forwarders:
+
+	•	Collectors are systems that receive events from other systems.
+	•	Forwarders are the systems that send events to the collectors.
+
+b. Configure Group Policy for Forwarding:
+
+	•	Create a Group Policy Object (GPO) to configure event forwarding on the forwarders.
+
+2. Configure the Event Collector (Windows Server)
+
+a. Enable the Windows Event Collector Service:
+
+	•	Open Services and start the Windows Event Collector service.
+	•	Set the startup type to Automatic.
+
+b. Configure the Collector for Network Traffic:
+
+	•	Run wecutil qc in an elevated Command Prompt. This command sets up the collector for incoming event subscriptions.
+
+3. Configure the Event Forwarder (Client Systems)
+
+a. Enable the Windows Remote Management Service:
+
+	•	Open Services and start the Windows Remote Management (WS-Management) service.
+	•	Set the startup type to Automatic.
+
+b. Configure the Client to Trust the Collector:
+
+	•	Run winrm quickconfig in an elevated Command Prompt.
+	•	Run winrm set winrm/config/client @{TrustedHosts="collector_hostname"} to add the collector to the trusted hosts list.
+
+4. Create a Subscription on the Collector
+
+a. Open Event Viewer on the Collector:
+
+	•	Navigate to Subscriptions and click Create Subscription.
+
+b. Configure the Subscription:
+
+	•	Subscription Name: Name your subscription (e.g., “Security Event Forwarding”).
+	•	Description: Provide a description.
+	•	Destination Log: Specify the log where events will be stored (e.g., Forwarded Events).
+
+c. Configure Source Computers:
+
+	•	Click Add and specify the computers that will forward events.
+	•	Select the Collector Initiated option to manually specify computers or groups.
+
+d. Configure the Event Filters:
+
+	•	Click Select Events… and specify the event logs and event IDs you want to collect (e.g., Security log, 4624 for logon events).
+
+5. Deploy Group Policy to Forwarders
+
+a. Create a New Group Policy Object (GPO):
+
+	•	Open Group Policy Management and create a new GPO linked to the organizational unit (OU) containing the forwarders.
+
+b. Configure the GPO:
+
+	•	Navigate to Computer Configuration > Policies > Administrative Templates > Windows Components > Event Forwarding.
+
+c. Configure the Forwarding Policy:
+
+	•	Enable the Configure target Subscription Manager setting and specify the collector’s URL in the format: Server=http://collector_hostname:5985/wsman/SubscriptionManager/WEC.
+
+6. Verify and Monitor Event Collection
+
+a. Verify Forwarding:
+
+	•	Check the Forwarded Events log on the collector to ensure events are being received.
+
+b. Monitor and Troubleshoot:
+
+	•	Regularly monitor the event logs for any issues.
+	•	Use tools like Event Viewer, wecutil, and winrm for troubleshooting.
+
+Additional Tips
+
+	•	Security: Ensure that communication between forwarders and collectors is secure, using HTTPS if necessary.
+	•	Filtering: Refine your event filters to minimize noise and focus on critical events.
+	•	Documentation: Keep thorough documentation of your configuration for future reference and audits.
+
+This configuration will help you effectively collect and centralize security-relevant Windows Event Log events using Windows Event Forwarding.
