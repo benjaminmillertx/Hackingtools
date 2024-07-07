@@ -1,0 +1,16 @@
+To find out the owner of a website, you can use a variety of tools and methods. Here are a few steps you can follow to identify the owner of a website:
+
+1. **Perform a whois lookup**:
+
+The whois protocol is a standardized protocol for querying databases that store the registered users or assignees of Internet resources, such as domain names. You can use a whois lookup tool to query the whois database and find out the registered owner of a domain name.
+
+Here is an example of how you can use the `whois` command-line tool to look up the owner of a website:
+
+```
+$ whois example.com
+
+Whois Server Version 2.0
+
+Domain names in the .com and .net domains can now be registered
+with many different competing registrars. Go to http://www.internic.net
+for detailed information.
