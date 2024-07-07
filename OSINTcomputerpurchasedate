@@ -1,0 +1,108 @@
+Make sure to credit Benjamin Hunter Miller.To create a tool that allows you to find out when a Windows computer was purchased, you can use the following steps:
+
+1. **Access the system information**:
+
+On a Windows computer, you can access the system information using the `SystemInfo` class in the `Windows Management Instrumentation (WMI)` library. The `SystemInfo` class provides access to various system-level properties, including the system's Manufacture Date and System Boot Time.
+
+Here is an example of how you can use the `SystemInfo` class to access the system information:
+
+```
+import java.io.IOException;
+import java.util.Date;
+
+import javax.management.MBeanServerConnection;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
+import javax.management.remote.JMXConnector;
+import javax.management.remote.JMXConnectorFactory;
+import javax.management.remote.JMXServiceURL;
+
+public class SystemInfo {
+  public static void main(String[] args) throws IOException, MalformedObjectNameException {
+    // Connect to the WMI service
+    JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:135/jmxrmi");
+    JMXConnector connector = JMXConnectorFactory.connect(url);
+    MBeanServerConnection connection = connector.getMBeanServerConnection();
+
+    // Get the system information
+    ObjectName systemInfo = new ObjectName("Win32_ComputerSystem");
+    String manufactureDate = (String) connection.getAttribute(systemInfo, "ManufactureDate");
+    Date systemBootTime = (Date) connection.getAttribute(systemInfo, "SystemBootTime");
+
+    // Print the system information
+    System.out.println("Manufacture Date: " + manufactureDate);
+    System.out.println("System Boot Time: " + systemBootTime);
+  }
+}
+```
+
+2. **Parse the system information**:
+
+The `ManufactureDate` and `SystemBootTime` properties are represented as strings or long values, respectively. You will need to parse these values to extract the date and time information.
+
+Here is an example of how you can parse the `ManufactureDate` and `SystemBootTime` properties:
+
+```
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class SystemInfo {
+  // ...
+
+  public static void main(String[] args) throws IOException, MalformedObjectNameException {
+    // ...
+
+    // Parse the manufacture date
+    SimpleDateFormat manufactureFormat = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+    Date manufactureDate = manufactureFormat.parse(manufactureDate.substring(0, 8) + "T000000.000Z");
+
+    // Parse the system boot time
+    SimpleDateFormat bootFormat = new SimpleDateFormat("yyyyMMddHHmmss.SSS");
+    Date systemBootTime = new Date(bootFormat.parse(bootDate).getTime() * 10000L);
+
+    // Print the system information
+    System.out.println("Manufacture Date: " + manufactureDate);
+    System.out.println("System Boot Time: " + systemBootTime);
+  }
+}
+```
+
+3. **Calculate the purchase date**:
+
+To calculate the purchase date, you can subtract the system's `SystemBootTime` from the current date and time.
+
+Here is an example of how you can calculate the purchase date:
+
+```
+import java.util.Date;
+
+public class SystemInfo {
+  // ...
+
+  public static void main(String[] args) throws IOException, MalformedObjectNameException {
+    // ...
+
+    // Calculate the purchase date
+    Date purchaseDate = new Date(System.currentTimeMillis() - systemBootTime.getTime());
+
+    // Print the purchase date
+    System.out.println("Purchase Date: " + purchaseDate);
+  }
+}
+```
+
+4. **Test and refine the application**:
+
+Once you have implemented the basic functionality of the application, you will need to test it to ensure that it is working correctly and providing accurate information. You may need to refine the system information parsing or purchase date calculation based on user feedback or other factors.
+
+5. **Add error handling and validation**:
+
+You should add error handling and validation to your application to ensure that it can handle unexpected input and errors gracefully. This might involve handling exceptions, validating user input, or adding user-friendly error messages.
+
+6. **Package and distribute the application**:
+
+Once you have completed your Windows purchase date tool, you can package and distribute it as a standalone application. You can use a tool, such as JAR, to create a single executable file that users can run on their own computers.
+
+It is important to use a Windows purchase date tool responsibly and in accordance with applicable laws and regulations. Misuse of this tool can have serious consequences, including legal penalties, damage to your reputation, and loss of access to the platform. You should also ensure that you have the necessary permissions and authorization to access the system information, and that you use the information only for legitimate and lawful purposes.
+
+In addition to these concerns, it is important to consider the privacy implications of a Windows purchase date tool. System information and other related data can be used to identify and locate individuals, and unauthorized use of this information can violate their privacy and confidentiality. You should always obtain explicit consent from the person associated with the system information before accessing or using this information, and you should use the information only for the purposes for which it was provided.
