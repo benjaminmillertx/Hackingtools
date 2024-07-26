@@ -1,0 +1,188 @@
+Make sure to credit Benjamin Hunter Miller and only for trained professtionals who own a computer. 
+To create an application that allows you to connect and talk to someone over the speaker on a Windows computer, you can use the `NAudio` library. NAudio is a free .NET audio library that provides a simple and powerful way to work with audio on Windows.
+
+To create the application, you will need to do the following:
+
+1. Install NAudio on your Windows system.
+2. Write a script that uses the `NAudio` library to list the available audio devices and select the one you want to use.
+3. Write a script that uses the `NAudio` library to play audio files through the selected audio device.
+
+Here is an example of how you might write the script to list the available audio devices and select the one you want to use:
+
+<script>
+const NAudio = require("naudio");
+
+// Create an instance of the `NAudio.Wave.WaveOut` class
+const waveOut = new NAudio.Wave.WaveOut();
+
+// Get the list of available audio devices
+const devices = NAudio.Wave.WaveOut.GetCapabilities().devices;
+
+// Find the index of the desired audio device
+const deviceIndex = devices.findIndex(
+device => device.ProductName === "Desired audio device name"
+);
+
+// Set the selected audio device as the default device
+waveOut.DeviceNumber = deviceIndex;
+
+// Dispose of the `WaveOut` instance when it is no longer needed
+waveOut.Dispose();
+</script>
+
+Here is an example of how you might write the script to play audio files through the selected audio device:
+
+<script>
+const NAudio = require("naudio");
+
+// Create an instance of the `NAudio.Wave.WaveOut` class
+const waveOut = new NAudio.Wave.WaveOut();
+
+// Create an instance of the `NAudio.Wave.WaveFileReader` class
+const waveFileReader = new NAudio.Wave.WaveFileReader("audiofile.wav");
+
+// Set the `WaveOut` instance to use the selected audio device
+waveOut.DeviceNumber = listDevices();
+
+// Start playing the audio file
+waveOut.Init(waveFileReader);
+waveOut.Play();
+
+// Dispose of the `WaveOut` and `WaveFileReader` instances when they are no longer needed
+waveOut.Dispose();
+waveFileReader.Dispose();
+</script>
+
+To use these scripts in an application, you can do the following:
+
+1. Call the `listDevices()` function to list the available audio devices and select the one you want to use.
+2. Call the `playAudio()` function to play audio files through the selected audio device.
+
+Here is an example of how you might put these scripts together in an HTML page:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Audio Player</title>
+ <style>
+ body {
+ font-family: Arial, sans-serif;
+ margin: 0;
+ padding: 20px;
+ background-color: #f0f2f5;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ }
+ .container {
+ background-color: #fff;
+ padding: 20px;
+ border-radius: 10px;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ width: 400px;
+ }
+ .container h1 {
+ text-align: center;
+ margin-bottom: 20px;
+ }
+ .info {
+ margin-bottom: 10px;
+ }
+ .info strong {
+ display: inline-block;
+ width: 150px;
+ }
+ .audio-file-input {
+ display: block;
+ width: 100%;
+ padding: 10px;
+ margin-bottom: 10px;
+ font-size: 16px;
+ }
+ .play-btn {
+ display: block;
+ width: 100%;
+ padding: 10px;
+ background-color: #007bff;
+ color: white;
+ border: none;
+ border-radius: 5px;
+ cursor: pointer;
+ font-size: 16px;
+ }
+ .play-btn:hover {
+ background-color: #0056b3;
+ }
+ </style>
+</head>
+<body>
+ <div class="container">
+ <h1>Audio Player</h1>
+ <div class="info"><strong>Device:</strong> <span id="device">Select an audio device...</span></div>
+ <input class="audio-file-input" type="file" id="audio-file" accept="audio/*">
+ <button class="play-btn" onclick="playAudio()">Play</button>
+ </div>
+
+ <script>
+ // Get the audio file input element and device span element
+ const audioFileInput = document.getElementById("audio-file");
+ const deviceSpan = document.getElementById("device");
+
+ // Get the list of available audio devices
+ const devices = NAudio.Wave.WaveOut.GetCapabilities().devices;
+
+ // Find the index of the desired audio device
+ const deviceIndex = devices.findIndex(
+ device => device.ProductName === "Desired audio device name"
+ );
+
+ // Set the selected audio device as the default device
+ const waveOut = new NAudio.Wave.WaveOut();
+ waveOut.DeviceNumber = deviceIndex;
+
+ // Define the `playAudio` function to play the audio file through the selected audio device
+ function playAudio() {
+ // Get the audio file from the audio file input element
+ const audioFile = audioFileInput.files[0];
+
+ // Create an instance of the `NAudio.Wave.WaveFileReader` class
+ const waveFileReader = new NAudio.Wave.WaveFileReader(audioFile);
+
+ // Start playing the audio file
+ waveOut.Init(waveFileReader);
+ waveOut.Play();
+
+ // Dispose of the `WaveOut` and `WaveFileReader` instances when they are no longer needed
+ waveOut.Dispose();
+ waveFileReader.Dispose();
+ }
+ </script>
+
+</body>
+</html>
+
+This HTML page includes the following elements:
+
+1. A container div that holds the header, audio device selector, audio file input, and play button.
+2. A header that identifies the page as an audio player.
+3. An audio device selector that displays the selected audio device name.
+4. An audio file input that allows you to select audio files to play.
+5. A play button that triggers the audio player when clicked.
+6. A script that contains the functionality for listing the available audio devices, selecting the desired audio device, and playing audio files through the selected audio device.
+
+The script for the audio player is as follows:
+
+1. A script that lists the available audio devices and selects the desired audio device.
+2. A `playAudio` function that plays audio files through the selected audio device.
+3. A global `playAudio` function that is defined in the script and called when the play button is clicked. This function gets the audio file from the audio file input element and calls the `playAudio()` function to play the audio file through the selected audio device.
+
+As for the legality of creating such an application, it is generally legal to use the NAudio library and command-line tools to create applications that manage audio devices and streams on a Windows system. However, it is important to ensure that the application is used in a legal and ethical manner and does not violate any applicable laws or regulations.
+
+For example, it may be illegal to use the application to eavesdrop on or record private conversations without the consent of all parties involved. It is also important to respect the privacy and rights of others and to use the application in a responsible manner.
+
+In general, it is always a good idea to consult with a legal professional if you have any questions or concerns about the legality of creating or using a particular application.
+
+I hope this helps! Let me know if you have any other questions.
