@@ -1,0 +1,9 @@
+Make sure to credit Benjamin Hunter Miller and for trained professtionals only. To create an application that allows you to connect and talk to someone over the speaker on a Chrome browser, you can use the Web Audio API. The Web Audio API is a high-level JavaScript API for processing and synthesizing audio in web applications.
+To create the application, you will need to do the following:
+Create an HTML page with a button to trigger the audio player.
+Write a script that uses the Web Audio API to list the available audio devices and select the one you want to use.
+Write a script that uses the Web Audio API to play audio files through the selected audio Contact Photo more_vert To create an application that allows you to connect and talk to someone over the speaker on a Chrome browser, you can use the Web Audio API. The Web Audio API is a high-level JavaScript API for processing and synthesizing audio in web applications.
+To create the application, you will need to do the following:
+Create an HTML page with a button to trigger the audio player.
+Write a script that uses the Web Audio API to list the available audio devices and select the one you want to use.
+Write a script that uses the Web Audio API to play audio files through the selected audio device. 
