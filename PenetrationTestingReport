@@ -1,0 +1,152 @@
+Here is an example of how you might create a penetration testing report web page with bar graphs for common security issues and a space to put the name of the company, the target of the hack, and the name of the penetration tester using Python, Flask, and the Bokeh library. I will also show you how to style the page using CSS to give it a Facebook theme.
+Step 1: Install the Bokeh library
+First, you will need to install the Bokeh library, which is a Python library for creating interactive web charts and plots. You can install the Bokeh library using pip, the Python package manager.
+To install the Bokeh library, run the following command in your terminal or command prompt:
+pip install bokeh
+Step 2: Import the Flask and Bokeh libraries
+Next, you will need to import the Flask and Bokeh libraries in your Python script. You can import the Flask and Bokeh libraries using the from flask import Flask, render_template and from bokeh.plotting import figure statements.
+<script>
+from flask import Flask, render_template
+from bokeh.plotting import figure
+</script>
+Step 3: Create a data source
+Next, you will need to create a data source for the bar graphs. A data source is an object that holds the data for the chart. You can use a dictionary as a data source in Bokeh.
+Here is an example of how you might create a data source for a bar graph that shows the number of common security issues:
+<script>
+// Create a dictionary of data
+data = {'vulnerabilities': ['SQL Injection', 'Cross-Site Scripting', 'Buffer Overflow', 'Remote Code Execution'],
+'count': [10, 15, 5, 2]}
+// Create a Bokeh ColumnDataSource
+source = ColumnDataSource(data)
+</script>
+In this example, the data dictionary is the data source for the bar graph, and the source variable is a Bokeh ColumnDataSource that holds the data source.
+Step 4: Create the bar graph
+Next, you will need to create the bar graph using the Bokeh library. You can use the figure function to create a new chart, and you can use the various methods of the figure object to configure the chart.
+Here is an example of how you might create a bar chart that shows the number of common security issues:
+<script>
+// Create a new figure
+p = figure(x_range=data['vulnerabilities'], height=300, width=800, sizing_mode='stretch_both', title="Penetration Testing Report", x_axis_label="Vulnerabilities", y_axis_label="Count")
+// Add a bar glyph to the figure
+p.vbar(x='vulnerabilities', top='count', width=0.7, source=source)
+// Show the chart
+show(p)
+</script>
+In this example, the figure function creates a new figure object, and the p.vbar method adds a bar glyph to the chart. The show function displays the chart in the default browser.
+Step 5: Create the web page
+Next, you will need to create the web page using Flask. You can use the render_template function to render a web page template and pass the data source to the template.
+Here is an example of how you might create a web page that shows the penetration testing report:
+<script>
+@app.route('/report')
+def report():
+// Render the report.html template
+return render_template('report.html', source=source, data=data)
+</script>
+In this example, the report function handles the request for the penetration testing report page, and the render\_template function renders the report.html template and passes the data source and data to the template.
+Step 6: Create the web page template
+Next, you will need to create the web page template using HTML and CSS. You can use the Bokeh output_notebook function to generate the HTML and CSS code for the chart.
+Here is an example of how you might create the report.html template:
+<script>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Penetration Testing Report</title>
+{{ script | safe }}
+{{ css | safe }}
+</head>
+<body>
+<h1>Penetration Testing Report</h1>
+<h2>Company: {{ company }}</h2>
+<h2>Target: {{ target }}</h2>
+<h2>Penetration Tester: {{ tester }}</h2>
+<div id="vulnerabilities"></div>
+<script>
+// Get the Bokeh plot data
+var source = new Bokeh.ColumnDataSource({
+data: {{ source.data | tojson }},
+metadata: {{ source.metadata | tojson }}
+});
+// Create the Bokeh plot
+var p = new Bokeh.Plot({
+title: "Vulnerabilities",
+x_range: {{ source.data.vulnerabilities | tojson }},
+y_range: new Bokeh.Range1d({start: 0, end: {{ data.count | max }} }),
+x_axis_type: "category",
+});
+// Add the bars to the plot
+for (var i = 0; i < {{ data.count | length }}; i++) {
+p.add_glyph(source, new Bokeh.VBar({x: {{ data.vulnerabilities | tojson }}[i], top: {{ data.count | tojson }}[i], width: 0.7, fill_color: Bokeh.palettes.Category10[8][i], line_color: "black"}));
+}
+// Set the plot layout
+p.layout = {width: "800px", height: "300px"};
+// Add the plot to the page
+Bokeh.Plotting.show(p, new Bokeh.HTMLSanitizer(), {"target": "vulnerabilities"});
+</script>
+</body>
+</html>
+</script>
+Step 7: Style the web page
+Next, you can style the web page using CSS to give it a Facebook theme. You can add the CSS code to the <style> element in the <head> section of the report.html template.
+Here is an example of how you might style the web page with a Facebook theme:
+<script>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Penetration Testing Report</title>
+{{ script | safe }}
+{{ css | safe }}
+<style>
+body {
+background: #f2f2f2;
+font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+h1, h2 {
+color: #3b5998;
+}
+#vulnerabilities {
+width: 800px;
+height: 300px;
+margin: 0 auto;
+}
+</style>
+</head>
+<body>
+<h1>Penetration Testing Report</h1>
+<h2>Company: {{ company }}</h2>
+<h2>Target: {{ target }}</h2>
+<h2>Penetration Tester: {{ tester }}</h2>
+<div id="vulnerabilities"></div>
+<script>
+// Get the Bokeh plot data
+var source = new Bokeh.ColumnDataSource({
+data: {{ source.data | tojson }},
+metadata: {{ source.metadata | tojson }}
+});
+// Create the Bokeh plot
+var p = new Bokeh.Plot({
+title: "Vulnerabilities",
+x_range: {{ source.data.vulnerabilities | tojson }},
+y_range: new Bokeh.Range1d({start: 0, end: {{ data.count | max }} }),
+x_axis_type: "category",
+});
+// Add the bars to the plot
+for (var i = 0; i < {{ data.count | length }}; i++) {
+p.add_glyph(source, new Bokeh.VBar({x: {{ data.vulnerabilities | tojson }}[i], top: {{ data.count | tojson }}[i], width: 0.7, fill_color: Bokeh.palettes.Category10[8][i], line_color: "black"}));
+}
+// Set the plot layout
+p.layout = {width: "800px", height: "300px"};
+// Add the plot to the page
+Bokeh.Plotting.show(p, new Bokeh.HTMLSanitizer(), {"target": "vulnerabilities"});
+</script>
+</body>
+</html>
+</script>
+In this example, the <style> element contains CSS rules that style the web page with a Facebook theme. The body element has a light gray background color, and the h1, h2, and #vulnerabilities elements have a Facebook blue color.
+Step 8: Run the Flask app
+Finally, you can run the Flask app to start the web server and view the penetration testing report web page. To run the Flask app, use the flask run command in your terminal or command prompt.
+<script>
+flask run
+</script>
+In this example, the flask run command starts the Flask app and the web server. The penetration testing report web page will be available at <http://localhost:5000/report> in your web browser.
+I hope this helps! Let me know if you have any other questions.
+ 
+
