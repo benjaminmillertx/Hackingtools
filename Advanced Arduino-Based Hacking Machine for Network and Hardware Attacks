@@ -1,0 +1,272 @@
+Advanced Arduino-Based Hacking Machine for Network and Hardware Attacks
+Attributed to: Benjamin Hunter Miller
+
+This design builds a powerful hacking machine based on Arduino that leverages additional modules for network packet sniffing, hardware attacks, and wireless exploitation. While the Arduino handles physical hacking tasks (like USB HID keystroke injection and automation), more powerful peripherals like the ESP8266 or ESP32 handle Wi-Fi and Bluetooth hacking.
+
+This circuit is ideal for use in penetration testing, wireless packet sniffing, and keystroke injection attacks.
+
+Purpose:
+This machine is designed to:
+
+Perform Wi-Fi sniffing, packet injection, and wireless attacks using an ESP8266 or ESP32 module.
+Simulate keystroke injection attacks by emulating a Human Interface Device (HID) via Arduino Leonardo or Mega.
+Incorporate Bluetooth sniffing and exploitation with external modules.
+Components:
+Arduino Leonardo (for HID emulation) or Arduino Mega
+ESP8266 or ESP32 (for Wi-Fi sniffing, packet injection, and wireless hacking)
+Bluetooth Module (e.g., HC-05 or HM-10 for Bluetooth hacking)
+USB Host Shield (optional for advanced USB device attacks)
+MicroSD Card Module (for logging captured packets)
+OLED Display (optional, for showing status and attack results)
+Battery Pack (for portability)
+Jumper Wires and Breadboard
+Pushbuttons (for mode selection or activation of specific attacks)
+USB Cable (for Arduino to act as a USB HID for keystroke injection)
+Functional Description:
+Arduino Leonardo/Mega:
+
+Acts as the brain of the hacking machine, controlling the flow of tasks.
+With Arduino Leonardo, it can emulate a USB Human Interface Device (HID), allowing it to simulate keystrokes or mouse movements, ideal for Rubber Ducky-like attacks.
+Can also interact with other modules (ESP8266, Bluetooth module) for advanced attacks.
+ESP8266/ESP32:
+
+Handles Wi-Fi sniffing, packet injection, de-authentication attacks, and Wi-Fi jamming.
+Can be used to run tools like Wi-Fi Deauther or Espressif's packet injection libraries.
+Bluetooth Module:
+
+Enables Bluetooth sniffing, device enumeration, and exploitation via devices like the HC-05 or HM-10 module.
+Arduino can control this module to scan for nearby Bluetooth devices and execute attacks like spoofing or pairing.
+MicroSD Card Module:
+
+Logs captured data, such as network packets, keystrokes, or attack logs, for later analysis.
+This ensures no data is lost during live attacks, and everything is recorded for analysis.
+OLED Display (optional):
+
+Displays attack status, mode selection, or current target information.
+Useful for headless (no monitor) usage in the field.
+Pushbuttons:
+
+Use physical buttons to select modes (e.g., Wi-Fi attack, Bluetooth attack, HID injection) or to trigger specific attacks.
+Circuit Blueprint:
+ESP8266 Connections:
+
+TX to Arduino RX.
+RX to Arduino TX (through a level shifter if using a 5V Arduino).
+VCC to 5V.
+GND to GND.
+Bluetooth Module Connections (HC-05):
+
+TX to Arduino RX1 (for secondary serial communication).
+RX to Arduino TX1 (through a level shifter).
+VCC to 5V.
+GND to GND.
+MicroSD Card Module Connections:
+
+CS to digital pin 10.
+MOSI to digital pin 11.
+MISO to digital pin 12.
+SCK to digital pin 13.
+VCC to 5V.
+GND to GND.
+OLED Display Connections:
+
+SDA to A4 (on Arduino Leonardo).
+SCL to A5 (on Arduino Leonardo).
+VCC to 5V.
+GND to GND.
+Pushbutton Connections:
+
+One side of the button to digital pin 7.
+Other side to GND (with a 10kΩ pull-down resistor).
+Schematic Diagram:
+rust
+Copy code
+                  +---------------------+
+                  |   Arduino Leonardo   |
+                  +---------------------+
+                        |        |       
+                        |        |        
+                        |        |        
+                ESP8266/ESP32     |       Bluetooth Module (HC-05)
+           +--------------------+|       +--------------------+
+           | TX -> RX (Pin 0)    ||       | TX -> RX1 (Pin 18) |
+           | RX -> TX (Pin 1)    ||       | RX -> TX1 (Pin 19) |
+           | VCC -> 5V           ||       | VCC -> 5V          |
+           | GND -> GND          ||       | GND -> GND         |
+           +--------------------+|       +--------------------+
+                                  |
+         MicroSD Card Module       |
+    +-------------------------+   |
+    | CS -> Pin 10             |   |
+    | MOSI -> Pin 11           |   |
+    | MISO -> Pin 12           |   |
+    | SCK -> Pin 13            |   |
+    | VCC -> 5V                |   |
+    | GND -> GND               |   |
+    +-------------------------+   |
+                                  |
+         OLED Display             |         Pushbutton
+    +-------------------------+   |     +---------------------+
+    | SDA -> A4                |   |     | One side -> Pin 7   |
+    | SCL -> A5                |   |     | Other side -> GND   |
+    | VCC -> 5V                |   |     +---------------------+
+    | GND -> GND               |   |
+    +-------------------------+   |
+                                  |
+                        Battery Pack (Power for Portability)
+                  +---------------------------+
+                  |   USB-C (5V to Arduino)   |
+                  +---------------------------+
+Code Outline:
+cpp
+Copy code
+#include <SoftwareSerial.h>
+#include <SD.h>
+#include <Wire.h>
+#include <Adafruit_SSD1306.h>  // For OLED display
+
+// Setup for ESP8266 Communication
+SoftwareSerial esp8266(0, 1);  // RX (pin 0), TX (pin 1)
+
+// Bluetooth Module Communication
+SoftwareSerial btSerial(18, 19);  // RX1 (pin 18), TX1 (pin 19)
+
+// SD Card Logging
+const int chipSelect = 10;
+
+// OLED Display Setup
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+// Pushbutton for mode switching
+const int buttonPin = 7;
+int mode = 0;  // 0 = Idle, 1 = Wi-Fi Sniff, 2 = Bluetooth Hack, 3 = HID Attack
+
+void setup() {
+  Serial.begin(9600);
+  
+  // Initialize ESP8266 and Bluetooth
+  esp8266.begin(115200);
+  btSerial.begin(9600);
+
+  // Initialize SD Card
+  if (!SD.begin(chipSelect)) {
+    Serial.println("SD Card initialization failed!");
+    return;
+  }
+
+  // Initialize OLED
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println("OLED initialization failed!");
+    return;
+  }
+
+  // Setup button
+  pinMode(buttonPin, INPUT_PULLUP);
+
+  // Display welcome message
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.println("Hacking Machine Ready!");
+  display.display();
+}
+
+void loop() {
+  // Button press to switch modes
+  if (digitalRead(buttonPin) == LOW) {
+    mode++;
+    if (mode > 3) mode = 0;  // Reset mode cycle
+    delay(300);  // Debounce
+  }
+
+  switch (mode) {
+    case 0:
+      displayStatus("Idle Mode");
+      break;
+    case 1:
+      wifiSniffing();
+      break;
+    case 2:
+      bluetoothAttack();
+      break;
+    case 3:
+      hidInjection();
+      break;
+  }
+
+  delay(1000);
+}
+
+void displayStatus(String status) {
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.print("Mode: ");
+  display.println(status);
+  display.display();
+}
+
+void wifiSniffing() {
+  displayStatus("Wi-Fi Sniffing");
+  
+  // Send commands to ESP8266 to start sniffing
+  esp8266.println("AT+CWMODE=1");
+  esp8266.println("AT+CWLAP");
+  
+  // Log Wi-Fi networks to SD card
+  File logFile = SD.open("wifi_log.txt", FILE_WRITE);
+  if (logFile) {
+    logFile.println("Wi-Fi Sniffing Data...");
+    logFile.close();
+  } else {
+    Serial.println("Could not open log file.");
+  }
+}
+
+void bluetoothAttack() {
+  displayStatus("Bluetooth Attack");
+
+  // Scan for Bluetooth devices
+  btSerial.println("AT+INQ");
+
+  // Log Bluetooth devices to SD card
+  File logFile = SD.open("bt_log.txt", FILE_WRITE);
+  if (logFile) {
+    logFile.println("Bluetooth Scan Data...");
+    logFile.close();
+  } else {
+    Serial.println("Could not open log file.");
+  }
+}
+
+void hidInjection() {
+  displayStatus("HID Injection");
+
+  // Send a simulated keystroke (USB HID)
+  Keyboard.begin();
+  Keyboard.print("Hacked by Benjamin!");
+  Keyboard.end();
+}
+Working Process:
+Wi-Fi Sniffing:
+
+The ESP8266/ESP32 module is controlled by the Arduino to scan for available Wi-Fi networks and capture packet data.
+The sniffed data can be logged to the MicroSD card for later analysis.
+The OLED screen shows real-time status.
+Bluetooth Hacking:
+
+The Bluetooth module is controlled by the Arduino to scan for nearby Bluetooth devices, enabling enumeration and potential pairing exploits.
+Results are also logged on the SD card.
+HID Injection:
+
+Using Arduino Leonardo (or Arduino Mega with USB Host Shield), the machine can act as a USB keyboard and execute keystroke injection attacks (e.g., simulating a Rubber Ducky attack).
+Upon insertion into a computer's USB port, it can automatically type a sequence of keystrokes or run a malicious payload.
+Pushbutton Mode Control:
+
+The physical pushbutton allows the user to easily switch between different attack modes: Wi-Fi sniffing, Bluetooth hacking, or HID injection.
+Portability:
+
+The entire machine is powered by a portable battery pack, making it highly mobile for field operations.
+This advanced hacking machine gives you the ability to perform network sniffing, wireless attacks, Bluetooth exploitation, and hardware attacks using a combination of Arduino, ESP8266, and Bluetooth modules.
