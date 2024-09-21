@@ -1,0 +1,163 @@
+Designing a hacking circuit optimized for packet sniffing and handling BlackArch Linux on embedded devices involves creating a portable hardware setup that supports network monitoring, wireless packet capture, and potential exploitation tools. BlackArch Linux is an excellent choice for this because it comes with a massive collection of pentesting tools optimized for security assessments and hacking tasks.
+Attrubited to Benjamin Hunter Miller
+This circuit will focus on:
+
+Packet sniffing (using Wi-Fi adapters capable of monitor mode and packet injection).
+Handling BlackArch Linux for performing penetration testing, running packet analyzers, etc.
+Portability, so it can be deployed discreetly in the field.
+Purpose:
+This circuit is designed to capture and analyze network traffic, perform penetration testing, and execute network security assessments. BlackArch Linux will be running on a Raspberry Pi, which supports packet sniffing tools like Wireshark, Aircrack-ng, etc.
+
+Components:
+Raspberry Pi 4 (with BlackArch Linux installed)
+Wi-Fi Adapter with Monitor Mode Support (e.g., ALFA AWUS036ACH or TP-Link TL-WN722N)
+MicroSD Card (32GB or larger, pre-installed with BlackArch Linux)
+Battery Pack (for portability)
+HDMI Display and Mini Keyboard (optional for debugging)
+Ethernet Cable (for direct wired network sniffing)
+USB Hub (for connecting multiple adapters or other peripherals)
+Fan or Heatsink (for cooling, as packet sniffing may generate heat)
+Jumper Wires and Breadboard (for adding switches or additional components)
+Functional Description:
+Raspberry Pi 4: The core of the hacking device. It will run BlackArch Linux, pre-configured for packet sniffing, penetration testing, and other hacking tools.
+Wi-Fi Adapter: Supports monitor mode and packet injection, necessary for sniffing wireless packets, cracking WEP/WPA keys, and conducting wireless penetration tests.
+Battery Pack: Provides portable power to the Raspberry Pi, enabling it to run for extended periods without being connected to an outlet.
+Ethernet Cable: If targeting wired networks, this can be used for direct LAN sniffing.
+Cooling System: Keeps the Raspberry Pi cool, especially during resource-intensive packet capturing tasks.
+Switches and GPIO: Optional switches can be added to trigger different modes (sniffing, attack, etc.).
+Circuit Blueprint:
+Raspberry Pi 4 Connections:
+Wi-Fi Adapter (connected via USB to one of the Raspberry Pi’s USB 3.0 ports).
+
+Ensure it supports monitor mode for wireless packet capture and injection.
+Battery Pack:
+
+5V to power the Raspberry Pi through its USB-C power input.
+A portable battery pack rated at 2.5A or higher will provide sufficient power for the Raspberry Pi 4 and the Wi-Fi adapter.
+Ethernet Cable:
+
+Connect to the Ethernet port on the Raspberry Pi for wired network sniffing.
+This allows for high-speed network monitoring on local area networks (LANs).
+HDMI Display (optional):
+
+HDMI port for debugging or when needing a GUI-based tool (e.g., Wireshark).
+Connect an HDMI monitor and a mini keyboard for quick setup or debugging. Once set up, SSH can be used for remote control.
+GPIO Pins (for optional control buttons):
+
+Pins can be connected to a momentary switch for triggering specific hacking tasks (e.g., enabling/disabling packet sniffing).
+For example, a pushbutton connected between GPIO17 and GND can be used to toggle packet sniffing mode.
+Cooling System:
+
+Fan or heatsink to cool the Raspberry Pi. Connect a small fan to the 5V and GND pins of the GPIO header if needed.
+Schematic Diagram:
+lua
+Copy code
+                       +---------------------------+
+                       |      Raspberry Pi 4       |
+                       +---------------------------+
+                                |       |   
+          Wi-Fi Adapter         |       |   Battery Pack
+    +---------------------+     |       |   +--------------------+
+    | USB 3.0 (Wi-Fi)      |-----|       |---| USB-C (Power Input) |
+    +---------------------+     |       |   +--------------------+
+                                 |
+            HDMI Display         |
+    +--------------------+       |
+    | HDMI (Debugging)    |-------|
+    +--------------------+       |
+                                 |
+            Ethernet Cable        |
+    +--------------------+       |
+    | Ethernet (Wired)    |-------|
+    +--------------------+       |
+                                 |
+       GPIO Pins & Fan           |
+    +------------------------+   |
+    | Pin 17 (Switch Control) |---|
+    | 5V (Fan)                |   |
+    | GND (Fan)               |---|
+    +------------------------+
+Setup:
+BlackArch Linux Installation:
+
+Download the BlackArch Linux ARM version from the official BlackArch Linux website.
+Flash the BlackArch Linux ARM image onto a 32GB microSD card using software like Etcher.
+Insert the microSD card into the Raspberry Pi and boot it up.
+Wi-Fi Adapter Setup:
+
+Connect the Wi-Fi adapter to one of the Raspberry Pi’s USB 3.0 ports.
+Ensure that the Wi-Fi adapter supports monitor mode and packet injection by using commands like:
+bash
+Copy code
+iwconfig
+To enable monitor mode on the Wi-Fi adapter:
+bash
+Copy code
+sudo ip link set wlan0 down
+sudo iw dev wlan0 set type monitor
+sudo ip link set wlan0 up
+Packet Sniffing Tools:
+
+Use Aircrack-ng to sniff packets and perform attacks:
+bash
+Copy code
+sudo airodump-ng wlan0
+Use Wireshark or tcpdump to capture network traffic:
+bash
+Copy code
+sudo wireshark &
+Or:
+bash
+Copy code
+sudo tcpdump -i wlan0
+Wired Sniffing:
+
+Connect the Ethernet cable to the Raspberry Pi’s Ethernet port for wired network monitoring.
+Use tcpdump or Wireshark to capture traffic on the Ethernet interface (eth0).
+Optional Switch Trigger:
+
+Configure a GPIO button connected to GPIO17 to toggle sniffing tasks.
+Python can be used to handle the button press event:
+python
+Copy code
+import RPi.GPIO as GPIO
+import os
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def sniff_toggle(channel):
+    os.system('sudo airodump-ng wlan0')
+
+GPIO.add_event_detect(17, GPIO.FALLING, callback=sniff_toggle, bouncetime=200)
+
+while True:
+    pass
+SSH Access (for remote control):
+
+To control the Raspberry Pi remotely, enable SSH by running:
+bash
+Copy code
+sudo systemctl enable ssh
+sudo systemctl start ssh
+Use an SSH client on another device to connect to the Raspberry Pi:
+bash
+Copy code
+ssh pi@<Raspberry Pi IP address>
+Working Process:
+The Raspberry Pi 4 boots into BlackArch Linux from the microSD card.
+The Wi-Fi adapter is set into monitor mode to capture network packets in real-time.
+If necessary, a physical button connected to GPIO17 can toggle packet sniffing on or off.
+Wireshark or Aircrack-ng tools are used to capture wireless packets or attempt wireless attacks like WEP/WPA cracking.
+tcpdump or Wireshark can capture wired traffic via the Ethernet port if monitoring a local network.
+The cooling system (fan or heatsink) prevents overheating during prolonged sniffing sessions.
+The battery pack allows the system to function in portable, field-based environments without being tethered to a power source.
+For remote operation, SSH is used to connect and control the Raspberry Pi from another device.
+Recommended BlackArch Tools:
+Wireshark: For detailed packet capture and analysis.
+Aircrack-ng Suite: For packet sniffing, replay attacks, and wireless key cracking.
+tcpdump: For capturing packets from both wired and wireless interfaces.
+ettercap: For man-in-the-middle attacks and ARP poisoning.
+Kismet: For network detection, packet sniffing, and device tracking.
+This portable hacking circuit will allow you to sniff packets, capture traffic, and perform network assessments using BlackArch Linux on Raspberry Pi, with all tools optimized for field use.
+
